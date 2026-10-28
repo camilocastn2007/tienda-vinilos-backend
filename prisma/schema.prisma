@@ -1,0 +1,61 @@
+// prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  user
+  admin
+}
+
+model User {
+  id        String   @id @default(uuid())
+  nombre    String
+  email     String   @unique
+  password  String
+  role      Role     @default(user)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  pedidos   Pedido[]
+
+  @@map("users")
+}
+
+model Disco {
+  id        String   @id @default(uuid())
+  artista   String
+  titulo    String
+  genero    String
+  precio    Int
+  imagen    String
+  stock     Int      @default(10)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  pedidos   Pedido[]
+
+  @@map("discos")
+}
+
+model Pedido {
+  id        String   @id @default(uuid())
+  userId    String
+  discoId   String
+  cantidad  Int      @default(1)
+  mensaje   String?
+  estado    String   @default("PENDIENTE")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  disco     Disco    @relation(fields: [discoId], references: [id], onDelete: Restrict)
+
+  @@map("pedidos")
+}
