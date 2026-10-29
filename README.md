@@ -107,3 +107,13 @@ Durante el proceso tuve que corregir varios puntos donde la IA generó código i
 - **Obtención del usuario en pedidos:** Inicialmente la IA intentó recibir el `userId` en el cuerpo de la petición (`req.body`). Esto era un fallo grave de seguridad porque cualquier persona podría enviar el ID de otro usuario y hacer pedidos a su nombre. Lo corregí para que el `userId` se tome obligatoriamente del token validado en `req.user.id`.
 - **Tipado con Express:** En los parámetros de ruta (`req.params.id`), la IA asumía que siempre eran de tipo `string`, pero TypeScript marcaba advertencias por compatibilidad de tipos, por lo que aseguré las conversiones explícitas.
 - **Configuración de CORS:** En un inicio la sugerencia venía con `origin: '*'`, lo cual dejaba la API abierta a cualquier origen. Lo ajusté para que valide contra la variable de entorno `FRONTEND_URL`, permitiendo únicamente conexiones desde el frontend de la tienda.
+
+### 5. Evidencias de la pagina web
+<img width="1919" height="960" alt="image" src="https://github.com/user-attachments/assets/498acf01-a2d1-49f1-a8af-f89557aeea4f" />
+<img width="1919" height="990" alt="image" src="https://github.com/user-attachments/assets/69814d46-86ac-40c0-ab56-e9305dc91715" /><img width="1919" height="959" alt="image" src="https://github.com/user-attachments/assets/3a61ea83-5f15-4455-b400-a57f90591b38" />
+<img width="1919" height="981" alt="image" src="https://github.com/user-attachments/assets/0be611b2-c7ad-40fe-acfb-40f92ee90c64" />
+- en este item de aca se hace un registro en el que no estaban todos los caracteres necesarios, luego se agregan los faltantes y se procede con una respuesta correcta
+- <img width="1919" height="977" alt="image" src="https://github.com/user-attachments/assets/3fd29182-df2d-43ae-98dd-98ee33077f2a" />
+
+
+
