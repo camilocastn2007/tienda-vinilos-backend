@@ -5,4 +5,5 @@ export interface IPedidoRepository {
   create(data: CrearPedidoDTO): Promise<Pedido>;
   findByUserId(userId: string): Promise<Pedido[]>;
   findAll(): Promise<Pedido[]>;
+  delete(id: string, userId: string): Promise<boolean>;
 }

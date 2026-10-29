@@ -115,4 +115,20 @@ export class PrismaPedidoRepository implements IPedidoRepository {
       }
     }));
   }
+
+  async delete(id: string, userId: string): Promise<boolean> {
+    const pedido = await prisma.pedido.findUnique({
+      where: { id }
+    });
+
+    if (!pedido || pedido.userId !== userId) {
+      return false;
+    }
+
+    await prisma.pedido.delete({
+      where: { id }
+    });
+
+    return true;
+  }
 }

@@ -3,12 +3,14 @@ import { Request, Response, NextFunction } from 'express';
 import { CreatePedidoUseCase } from '../../application/pedidos/CreatePedidoUseCase';
 import { GetMisPedidosUseCase } from '../../application/pedidos/GetMisPedidosUseCase';
 import { GetAllPedidosUseCase } from '../../application/pedidos/GetAllPedidosUseCase';
+import { DeletePedidoUseCase } from '../../application/pedidos/DeletePedidoUseCase';
 
 export class PedidoController {
   constructor(
     private readonly createPedidoUseCase: CreatePedidoUseCase,
     private readonly getMisPedidosUseCase: GetMisPedidosUseCase,
-    private readonly getAllPedidosUseCase: GetAllPedidosUseCase
+    private readonly getAllPedidosUseCase: GetAllPedidosUseCase,
+    private readonly deletePedidoUseCase: DeletePedidoUseCase
   ) {}
 
   crearPedido = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -44,6 +46,17 @@ export class PedidoController {
     try {
       const pedidos = await this.getAllPedidosUseCase.execute();
       res.status(200).json(pedidos);
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  eliminarPedido = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const userId = req.user!.id;
+      const { id } = req.params;
+      await this.deletePedidoUseCase.execute(id, userId);
+      res.status(200).json({ message: 'Pedido cancelado y eliminado correctamente' });
     } catch (error) {
       next(error);
     }
