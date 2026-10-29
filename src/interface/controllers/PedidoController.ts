@@ -55,7 +55,7 @@ export class PedidoController {
     try {
       const userId = req.user!.id;
       const { id } = req.params;
-      await this.deletePedidoUseCase.execute(id, userId);
+      await this.deletePedidoUseCase.execute(String(id), userId);
       res.status(200).json({ message: 'Pedido cancelado y eliminado correctamente' });
     } catch (error) {
       next(error);
